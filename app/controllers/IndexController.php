@@ -3,12 +3,9 @@ use Phalcon\Paginator\Adapter\Model as PaginatorModel;
 
 class IndexController extends ControllerBase
 {
-
-
     public function indexAction()
     {
         $currentPage = (int)$_GET["page"];
-
         $News = News::find(["order" => "date DESC"]);
         $paginator = new PaginatorModel(
             [
@@ -42,9 +39,11 @@ class IndexController extends ControllerBase
                     'pass' => $pass,
                 ]]);
             if ($user) {
+                $user_id = $user->getId();
                 $authorization = 1;
                 $this->session->set("authorization", $authorization);
                 $this->session->set("login", $login);
+                $this->session->set("user_id", $user_id);
                 return $this->JsonResponse([3]);
             }
 
@@ -54,10 +53,13 @@ class IndexController extends ControllerBase
                     'login' => $login,
                     'pass' => $pass,
                 ]]);
+
             if ($user) {
                 $authorization = 2;
+                $user_id = $user->getId();
                 $this->session->set("authorization", $authorization);
                 $this->session->set("login", $login);
+                $this->session->set("user_id", $user_id);
                 return $this->JsonResponse([3]);
             } else{
                 return $this->JsonResponse([1]);

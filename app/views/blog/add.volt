@@ -2,7 +2,7 @@
     Форма добавления новости:
 </h2>
 
-<form action="/admin/add" method="post" enctype = 'multipart/form-data'>
+<form action="/blog/add" method="post" enctype = 'multipart/form-data'>
 
     <label for="title">
         Заголовок:
@@ -45,8 +45,8 @@
     </label>
 
     <p> {{ form.render("cat_id") }} </p>
-    {{ form.render("user_id") }}
 
+    <input type="text" name="user_id" value={{ session.get('user_id')-1 }} >
     <p>{{ submit_button("Добавить") }}</p>
 
     <div id="errors">

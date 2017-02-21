@@ -18,7 +18,9 @@
             {% endfor %}
             {% if session.get('authorization')=== 1 %}
                 <li><a href="/admin">Админ</a></li>
-            {% endif %}
+                {% elseif (session.get('authorization')=== 2) %}
+                    <li><a href="/blog">Блог</a></li>
+                {% endif %}
         </ul>
     </div>
 </div>
@@ -37,7 +39,6 @@
             {{ form.render("pass") }}
         </div>
         <input type="hidden" name="current_url" id = current_url value="{{ router.getRewriteUri() }}">
-
         <a class="close" href="#close"></a>
         <a href="/signUp">Регистрация</a>
         <div class="form_err" style="display:none">Неверный логин или пароль</div>
