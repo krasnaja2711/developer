@@ -1,3 +1,12 @@
+html {
+    margin-top: 20px;
+}
+
+html > form {
+    border-radius: 3px;
+    border-shadow: 1px;
+    all-space-treatment: 20px;
+}
 a {
     font-size: 10px;
     color: #ff0000;
