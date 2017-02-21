@@ -22,7 +22,6 @@
                 <div id="content">
                       {% if session.get('authorization')!==null %}
                        {{ "Добро пожаловать, " ~ session.get('login') }}
-                          {{ session.get('user_id') }}
                         {% endif %}
                     {% for item in page.items %}
                     {% set cat = categories[item.getCatId()] %}
