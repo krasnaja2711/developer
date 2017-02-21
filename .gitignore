@@ -2,3 +2,8 @@
 .idea
 /cache/
 /config/development/
+app/config/config.php
+composer.*
+!composer.json
+Would skip repository vendor/phalcon/devtools
+vendor
