@@ -10,6 +10,7 @@ class NewsController extends ControllerBase
             'form1' => $form1,
             'comments' => $comments,
         ]);
+
         $slug = $this->dispatcher->getParam('slug');
         $category = $this->dispatcher->getParam('category');
 
@@ -58,6 +59,23 @@ class NewsController extends ControllerBase
             }
         }
         $this->view->setVar('comments', $temp);
+        $likes = Like::find([
+            'conditions' => 'news_id = :news_id:',
+            'bind' => [
+                'news_id' => $news_id,
+            ]
+        ]);
+        $rating = count($likes);
+        $user_id = $this->session->get('user_id');
+        $like = Like::findFirst([
+            'conditions' => 'user_id = :user_id: and news_id = :news_id:',
+            'bind'=>[
+                'user_id' => $user_id,
+                'news_id' => $news_id,
+            ]
+        ]);
+        $this-> view-> setVar('rating', $rating);
+        $this-> view-> setVar('like', $like);
     }
 
 
@@ -100,6 +118,32 @@ class NewsController extends ControllerBase
             'categories' => $Categories,
             'page' => $page,
         ]);
+    }
+
+    public function likeAction(){
+        $like = new Like();
+        $form = new LikeForm();
+        $this->view->setVars([
+            'form' => $form,
+            'like' => $like,
+        ]);
+        if ($form->isValid($_POST, $like)) {
+            if ($like->create()) {
+                $url = $this->request->getPost("current_url");
+                $this->response->redirect($url);
+            }
+        }
+    }
+
+    public function disLikeAction($id){
+        $like = Like::findFirst([
+            'conditions' => 'id = :id: ',//доп условия
+            'bind' => [
+                'id' => $id,
+            ]]);
+        $like->delete();
+        $url = $this->request->getPost("current_url");
+        $this->response->redirect($url);
 
     }
 

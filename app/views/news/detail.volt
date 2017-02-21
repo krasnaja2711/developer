@@ -10,8 +10,8 @@
     <div id="header-wrapper">
         <div id="header">
             <div id="logo">
-                <h1><a href="#">Cats_world </a></h1>
-                <p>Мир котов </p>
+                <h1>Developer</h1>
+                <p>Всё для начинающих программистов</p>
             </div>
         </div>
     </div>
@@ -27,6 +27,27 @@
                         <p><img src="/public/{{ news.photo }}" width="800" height="300" alt=""/></p>
                         {{ news.text }}
                     </div>
+                    <div class="rating">
+                        <p> Рейтинг:{{ rating }} </p>
+                        {% if (like==false) %}
+                        <a href="/news/like" onclick="document.getElementById('likeForm').submit(); return false;">Нравится </a>
+                        {% else %}
+                        <a href="/news/disLike/{{ like.getId() }}" onclick="document.getElementById('dislikeForm').submit(); return false;">Больше не нравится </a>
+                        {% endif %}
+                    </div>
+                    {% if (like==false) %}
+                    <form method="post" action="/news/like" id="likeForm">
+                        <input type="hidden" name="user_id" value="{{ session.get('user_id') }}">
+                        <input type="hidden" name="news_id" value="{{ news.getId() }}">
+                        <input type="hidden" name="current_url"
+                               value="{{ router.getRewriteUri() }}">
+                    </form>
+                    {% else %}
+                    <form method="post" action="/news/disLike/{{ like.getId() }}" id="dislikeForm">
+                        <input type="hidden" name="current_url"
+                               value="{{ router.getRewriteUri() }}">
+                    </form>
+                    {% endif %}
                     <div class="comBlock">
                         {% for com in Comments %}
                             <div class="commentBlock" id="comment-{{ com.getId() }}">
