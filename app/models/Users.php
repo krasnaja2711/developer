@@ -1,7 +1,6 @@
 <?php
 
 use Phalcon\Validation;
-use Phalcon\Mvc\Model\Validator\Email as EmailValidator;
 use Phalcon\Validation\Validator\Uniqueness;
 
 class Users extends \Phalcon\Mvc\Model
@@ -86,78 +85,14 @@ class Users extends \Phalcon\Mvc\Model
     public $id_roles;
 
     /**
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLogin()
-    {
-        return $this->login;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPass()
-    {
-        return $this->pass;
-    }
-
-    /**
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPhone()
-    {
-        return $this->phone;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDate()
-    {
-        return $this->date;
-    }
-
-    /**
-     * @return int
-     */
-    public function getIdRoles()
-    {
-        return $this->id_roles;
-    }
-
-
-
-    /**
      * Initialize method for model.
      */
     public function initialize()
     {
-        $this->setSchema("cats");
-        $this->belongsTo('id_roles', '\Roles', 'id', ['alias' => 'Roles']);
+        $this->setSchema("developer");
+        $this->hasMany('id', 'Like', 'user_id', ['alias' => 'Like']);
+        $this->hasMany('id', 'News', 'user_id', ['alias' => 'News']);
+
     }
 
     /**
@@ -170,15 +105,134 @@ class Users extends \Phalcon\Mvc\Model
         return 'users';
     }
 
+
+
     /**
-     * Allows to query a set of records that match the specified conditions
-     *
-     * @param mixed $parameters
-     * @return Users[]|Users
+     * @return int
      */
-    public static function find($parameters = null)
+    public function getId()
     {
-        return parent::find($parameters);
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLogin()
+    {
+        return $this->login;
+    }
+
+    /**
+     * @param string $login
+     */
+    public function setLogin($login)
+    {
+        $this->login = $login;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPass()
+    {
+        return $this->pass;
+    }
+
+    /**
+     * @param string $pass
+     */
+    public function setPass($pass)
+    {
+        $this->pass = $pass;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    /**
+     * @param string $phone
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param string $date
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIdRoles()
+    {
+        return $this->id_roles;
+    }
+
+    /**
+     * @param int $id_roles
+     */
+    public function setIdRoles($id_roles)
+    {
+        $this->id_roles = $id_roles;
     }
 
     /**
@@ -190,8 +244,6 @@ class Users extends \Phalcon\Mvc\Model
     public static function findFirst($parameters = null)
     {
         return parent::findFirst($parameters);
-
-
     }
 
 }

@@ -1,25 +1,25 @@
 <?php
-use Phalcon\Validation;
-use Phalcon\Paginator\Adapter\QueryBuilder as PaginatorQueryBuilder;
-use Phalcon\Validation\Validator\Uniqueness;
 
+use Phalcon\Validation;
+use Phalcon\Validation\Validator\Uniqueness;
 class News extends \Phalcon\Mvc\Model
 {
     public function validation()
     {
         $validator = new Validation();
 
-         $validator->add("title", new Uniqueness([
-           "message" => "Такой заголовок уже существует!",
+        $validator->add("title", new Uniqueness([
+            "message" => "Такой заголовок уже существует!",
         ]));
 
         $validator->add('url', new Uniqueness([
-           "message" => "Напишите другой slug"
+            "message" => "Напишите другой slug"
         ]));
 
         return $this->validate($validator);
 
     }
+
     /**
      *
      * @var integer
@@ -28,6 +28,166 @@ class News extends \Phalcon\Mvc\Model
      * @Column(type="integer", length=11, nullable=false)
      */
     public $id;
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param string $title
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * @return string
+     */
+    public function getKey()
+    {
+        return $this->key;
+    }
+
+    /**
+     * @param string $key
+     */
+    public function setKey($key)
+    {
+        $this->key = $key;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDesc()
+    {
+        return $this->desc;
+    }
+
+    /**
+     * @param string $desc
+     */
+    public function setDesc($desc)
+    {
+        $this->desc = $desc;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhoto()
+    {
+        return $this->photo;
+    }
+
+    /**
+     * @param string $photo
+     */
+    public function setPhoto($photo)
+    {
+        $this->photo = $photo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getText()
+    {
+        return $this->text;
+    }
+
+    /**
+     * @param string $text
+     */
+    public function setText($text)
+    {
+        $this->text = $text;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param string $date
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * @param string $url
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCatId()
+    {
+        return $this->cat_id;
+    }
+
+    /**
+     * @param int $cat_id
+     */
+    public function setCatId($cat_id)
+    {
+        $this->cat_id = $cat_id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUserId()
+    {
+        return $this->user_id;
+    }
+
+    /**
+     * @param int $user_id
+     */
+    public function setUserId($user_id)
+    {
+        $this->user_id = $user_id;
+    }
 
     /**
      *
@@ -46,7 +206,7 @@ class News extends \Phalcon\Mvc\Model
     /**
      *
      * @var string
-     * @Column(type="string", length=250, nullable=false)
+     * @Column(type="string", length=500, nullable=false)
      */
     public $desc;
 
@@ -86,167 +246,52 @@ class News extends \Phalcon\Mvc\Model
     public $cat_id;
 
     /**
-     * @return int
+     *
+     * @var integer
+     * @Column(type="integer", length=11, nullable=false)
      */
-    public function getId()
+    public $user_id;
+
+    /**
+     * Initialize method for model.
+     */
+    public function initialize()
     {
-        return $this->id;
+        $this->setSchema("developer");
+        $this->hasMany('id', 'Tags', 'news_id', ['alias' => 'Tags']);
+        $this->belongsTo('user_id', '\Users', 'id', ['alias' => 'Users']);
     }
 
     /**
-     * @param int $id
-     * @return News
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-        return $this;
-    }
-
-    /**
+     * Returns table name mapped in the model.
+     *
      * @return string
      */
-    public function getTitle()
+    public function getSource()
     {
-        return $this->title;
+        return 'news';
     }
 
     /**
-     * @param string $title
+     * Allows to query a set of records that match the specified conditions
+     *
+     * @param mixed $parameters
+     * @return News[]|News
+     */
+    public static function find($parameters = null)
+    {
+        return parent::find($parameters);
+    }
+
+    /**
+     * Allows to query the first record that match the specified conditions
+     *
+     * @param mixed $parameters
      * @return News
      */
-    public function setTitle($title)
+    public static function findFirst($parameters = null)
     {
-        $this->title = $title;
-        return $this;
+        return parent::findFirst($parameters);
     }
-
-    /**
-     * @return string
-     */
-    public function getKey()
-    {
-        return $this->key;
-    }
-
-    /**
-     * @param string $key
-     * @return News
-     */
-    public function setKey($key)
-    {
-        $this->key = $key;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDesc()
-    {
-        return $this->desc;
-    }
-
-    /**
-     * @param string $desc
-     * @return News
-     */
-    public function setDesc($desc)
-    {
-        $this->desc = $desc;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPhoto()
-    {
-        return $this->photo;
-    }
-
-    /**
-     * @param string $photo
-     * @return News
-     */
-    public function setPhoto($photo)
-    {
-        $this->photo = $photo;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getText()
-    {
-        return $this->text;
-    }
-
-    /**
-     * @param string $text
-     * @return News
-     */
-    public function setText($text)
-    {
-        $this->text = $text;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDate()
-    {
-        return $this->date;
-    }
-
-    /**
-     * @param string $date
-     * @return News
-     */
-    public function setDate($date)
-    {
-        $this->date = $date;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getUrl()
-    {
-        return $this->url;
-    }
-
-    /**
-     * @param string $url
-     * @return News
-     */
-    public function setUrl($url)
-    {
-        $this->url = $url;
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getCatId()
-    {
-        return $this->cat_id;
-    }
-
-    /**
-     * @param int $cat_id
-     * @return News
-     */
-    public function setCatId($cat_id)
-    {
-        $this->cat_id = $cat_id;
-        return $this;
-    }
-
-
 
 }

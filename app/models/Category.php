@@ -2,11 +2,7 @@
 
 class Category extends \Phalcon\Mvc\Model
 {
-    public function initialize()
-    {
-        $this->hasMany("id", "News", "id");
 
-    }
     /**
      *
      * @var integer
@@ -15,18 +11,87 @@ class Category extends \Phalcon\Mvc\Model
      * @Column(type="integer", length=11, nullable=false)
      */
     public $id;
+
     /**
      *
      * @var string
      * @Column(type="string", length=20, nullable=false)
      */
     public $name;
+
     /**
      *
      * @var string
      * @Column(type="string", length=50, nullable=false)
      */
     public $url;
+
+    /**
+     * Initialize method for model.
+     */
+
+    public function initialize()
+    {
+        $this->hasMany("id", "News", "id");
+
+    }
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * @param string $url
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+    }
+
+    /**
+     * Returns table name mapped in the model.
+     *
+     * @return string
+     */
+    public function getSource()
+    {
+        return 'category';
+    }
 
     /**
      * @param null $parameters
@@ -47,32 +112,5 @@ class Category extends \Phalcon\Mvc\Model
     {
         return parent::findFirst($parameters);
     }
-
-    /**
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getUrl()
-    {
-        return $this->url;
-    }
-
-
-
 
 }

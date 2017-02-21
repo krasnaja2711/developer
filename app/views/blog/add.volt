@@ -46,7 +46,7 @@
 
     <p> {{ form.render("cat_id") }} </p>
 
-    <input type="text" name="user_id" value={{ session.get('user_id')-1 }} >
+    <input type="text" name="user_id" value={{ session.get('user_id') }} >
     <p>{{ submit_button("Добавить") }}</p>
 
     <div id="errors">
