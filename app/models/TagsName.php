@@ -1,6 +1,6 @@
 <?php
 
-class Tags extends \Phalcon\Mvc\Model
+class TagsName extends \Phalcon\Mvc\Model
 {
 
     /**
@@ -14,17 +14,10 @@ class Tags extends \Phalcon\Mvc\Model
 
     /**
      *
-     * @var integer
-     * @Column(type="integer", length=11, nullable=false)
+     * @var string
+     * @Column(type="string", length=15, nullable=false)
      */
-    public $news_id;
-
-    /**
-     *
-     * @var integer
-     * @Column(type="integer", length=11, nullable=false)
-     */
-    public $tag_id;
+    public $name;
 
     /**
      * Initialize method for model.
@@ -32,8 +25,7 @@ class Tags extends \Phalcon\Mvc\Model
     public function initialize()
     {
         $this->setSchema("developer");
-        $this->belongsTo('news_id', '\News', 'id', ['alias' => 'News']);
-        $this->belongsTo('tag_id', '\TagsName', 'id', ['alias' => 'TagsName']);
+        $this->hasMany('id', 'Tags', 'tag_id', ['alias' => 'Tags']);
     }
 
     /**
@@ -43,14 +35,14 @@ class Tags extends \Phalcon\Mvc\Model
      */
     public function getSource()
     {
-        return 'tags';
+        return 'tags_name';
     }
 
     /**
      * Allows to query a set of records that match the specified conditions
      *
      * @param mixed $parameters
-     * @return Tags[]|Tags
+     * @return TagsName[]|TagsName
      */
     public static function find($parameters = null)
     {
@@ -61,7 +53,7 @@ class Tags extends \Phalcon\Mvc\Model
      * Allows to query the first record that match the specified conditions
      *
      * @param mixed $parameters
-     * @return Tags
+     * @return TagsName
      */
     public static function findFirst($parameters = null)
     {
