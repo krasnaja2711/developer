@@ -121,6 +121,7 @@ class NewsController extends ControllerBase
     }
 
     public function likeAction(){
+        $news_id = $this->request->getPost("news_id");
         $like = new Like();
         $form = new LikeForm();
         $this->view->setVars([
@@ -129,21 +130,39 @@ class NewsController extends ControllerBase
         ]);
         if ($form->isValid($_POST, $like)) {
             if ($like->create()) {
-                $url = $this->request->getPost("current_url");
-                $this->response->redirect($url);
+                $likes = Like::find([
+                    'conditions' => 'news_id = :news_id:',
+                    'bind' => [
+                        'news_id' => $news_id,
+                    ]
+                ]);
+                $rating = count($likes);
+                return $this->JsonResponse([$rating]);
             }
         }
     }
 
-    public function disLikeAction($id){
+    public function disLikeAction(){
+        $user_id = $this->request->getPost("user_id");
+        $news_id = $this->request->getPost("news_id");
         $like = Like::findFirst([
-            'conditions' => 'id = :id: ',//доп условия
+            'conditions' => 'user_id = :user_id: and news_id = :news_id:',//доп условия
             'bind' => [
-                'id' => $id,
+                'user_id' => $user_id,
+                'news_id' => $news_id,
+
             ]]);
-        $like->delete();
-        $url = $this->request->getPost("current_url");
-        $this->response->redirect($url);
+        if($like->delete()){
+            $likes = Like::find([
+                'conditions' => 'news_id = :news_id:',
+                'bind' => [
+                    'news_id' => $news_id,
+                ]
+            ]);
+            $rating = count($likes);
+            return $this->JsonResponse([$rating]);
+        }
+
 
     }
 

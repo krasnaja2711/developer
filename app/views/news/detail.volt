@@ -1,3 +1,36 @@
+<script>
+    $(function () {
+    $('.like-disLike').click(function (e) {
+        e.preventDefault();
+        var news_id = $("#news_id").val(),
+                user_id = $("#user_id").val(),
+                rating = $("#rating").val(),
+                key = $(this).data('key'),
+                $this = $(this);
+        $.ajax({
+            type: 'POST',
+            url: '/news/' + key,
+            data: {'user_id': user_id, 'news_id': news_id},
+            cache: false,
+            success: function (response) {
+                switch (key) {
+                    case 'like':
+                        $('.rating p').html("Рейтинг:"+ (response));
+                        $this.data('key', 'disLike').html('Не нравится');
+                        break;
+
+                    case 'disLike':
+                            $('.rating p').html("Рейтинг:" + (response ));
+                            $this.data('key', 'like').html('Нравится');
+                            break;//лайки только для зарешганых! дополнительные условия проверки, не работает если рейтинг больше 1
+                            //подгружать настоязий рейтинг
+                }
+            }
+        });
+    });
+    });
+
+</script>
 <head xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
     <meta name="keywords" content="{{ news.key }}"/>
     <meta name="description" content=" {{ news.desc }}"/>
@@ -28,22 +61,28 @@
                         {{ news.text }}
                     </div>
                     <div class="rating">
+                        <input type="hidden" id="rating" value="{{ rating }} ">
                         <p> Рейтинг:{{ rating }} </p>
                         {% if (like==false) %}
-                        <a href="/news/like" onclick="document.getElementById('likeForm').submit(); return false;">Нравится </a>
+                            <a class="like-disLike" data-key="like">Нравится</a>
                         {% else %}
-                        <a href="/news/disLike/{{ like.getId() }}" onclick="document.getElementById('dislikeForm').submit(); return false;">Больше не нравится </a>
+                            <a class="like-disLike" data-key="disLike">Не нравится</a>
                         {% endif %}
+
+
                     </div>
+
                     {% if (like==false) %}
                     <form method="post" action="/news/like" id="likeForm">
-                        <input type="hidden" name="user_id" value="{{ session.get('user_id') }}">
-                        <input type="hidden" name="news_id" value="{{ news.getId() }}">
+                        <input type="hidden" name="user_id" id="user_id" value="{{ session.get('user_id') }}">
+                        <input type="hidden" name="news_id" id="news_id" value="{{ news.getId() }}">
                         <input type="hidden" name="current_url"
                                value="{{ router.getRewriteUri() }}">
                     </form>
                     {% else %}
-                    <form method="post" action="/news/disLike/{{ like.getId() }}" id="dislikeForm">
+                    <form method="post" action="/news/disLike/" id="dislikeForm">
+                        <input type="hidden" name="user_id" id="user_id" value="{{ session.get('user_id') }}">
+                        <input type="hidden" name="news_id" id="news_id" value="{{ news.getId() }}">
                         <input type="hidden" name="current_url"
                                value="{{ router.getRewriteUri() }}">
                     </form>
@@ -52,37 +91,38 @@
                         {% for com in Comments %}
                             <div class="commentBlock" id="comment-{{ com.getId() }}">
                                 <div class="comment"><strong>{{ com.comment }}</strong><br>{{ com.date }}
-                                    <div id="delete">
-                                        {% if session.get('authorization')===1 %}
-                                            <a href="/news/del/{{ com.getId() }}"
-                                               onclick="document.getElementById('myform2-{{ com.getId() }}').submit(); return false;">Удалить</a>
-                                            <form method="post" action="/news/del/{{ com.getId() }}" id="myform2-{{ com.getId() }}">
-                                                <input type="hidden" name="current_url"
-                                                       value="{{ router.getRewriteUri() }}">
-                                            </form>
-                                        {% endif %}
-                                    </div>
-                                    {% if session.get('authorization')!==null %}
-                                        <div class="toggle">
-                                            <div class="content">
-                                                <form action="/news/detail" method="post" class="comment_form" >
-                                                    <input type="hidden" name="parent_id" class="parent_id"
-                                                           value="{{ com.getId() }}">
-                                                    {{ form1.render("comment") }}
-                                                    <input type="hidden" name="date" class="date"
-                                                           value="{{ date('Y-m-d') }} ">
-                                                    <input type="hidden" name="news_id" class="news_id"
-                                                           value="{{ news.id }}">
-                                                    <input type="hidden" name="current_url"
-                                                           value="{{ router.getRewriteUri() }}">
-                                                    <p><input name="button2" type="submit" value="Отправить">
-                                                        <span class="resp"></span></p>
-                                                </form>
-                                            </div>
-                                            <a class="toggler" href="#">Ответить</a>
-                                        </div>
+
+                                </div>
+                                <div id="delete">
+                                    {% if session.get('authorization')===1 %}
+                                        <a href="/news/del/{{ com.getId() }}"
+                                           onclick="document.getElementById('myform2-{{ com.getId() }}').submit(); return false;">Удалить</a>
+                                        <form method="post" action="/news/del/{{ com.getId() }}" id="myform2-{{ com.getId() }}">
+                                            <input type="hidden" name="current_url"
+                                                   value="{{ router.getRewriteUri() }}">
+                                        </form>
                                     {% endif %}
                                 </div>
+                                {% if session.get('authorization')!==null %}
+                                    <div class="toggle">
+                                        <div class="content">
+                                            <form action="/news/detail" method="post" class="comment_form" >
+                                                <input type="hidden" name="parent_id" class="parent_id"
+                                                       value="{{ com.getId() }}">
+                                                {{ form1.render("comment") }}
+                                                <input type="hidden" name="date" class="date"
+                                                       value="{{ date('Y-m-d') }} ">
+                                                <input type="hidden" name="news_id" class="news_id"
+                                                       value="{{ news.id }}">
+                                                <input type="hidden" name="current_url"
+                                                       value="{{ router.getRewriteUri() }}">
+                                                <p><input name="button2" type="submit" value="Отправить">
+                                                    <span class="resp"></span></p>
+                                            </form>
+                                        </div>
+                                        <a class="toggler" href="#">Ответить</a>
+                                    </div>
+                                {% endif %}
                                 {% for comm in comments %}
                                     {% if comm.getParentId() == com.getId() %}
                                         <div class="answer"><strong>{{ comm.comment }}</strong><br>{{ comm.date }}<br>{{  comm.getId() }}
