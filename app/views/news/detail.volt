@@ -15,15 +15,14 @@
             success: function (response) {
                 switch (key) {
                     case 'like':
-                        $('.rating p').html("Рейтинг:"+ (response));
+                        $('.rating p').html("Рейтинг:"+ (+response));
                         $this.data('key', 'disLike').html('Не нравится');
                         break;
 
                     case 'disLike':
-                            $('.rating p').html("Рейтинг:" + (response ));
+                            $('.rating p').html("Рейтинг:" + (+response ));
                             $this.data('key', 'like').html('Нравится');
-                            break;//лайки только для зарешганых! дополнительные условия проверки, не работает если рейтинг больше 1
-                            //подгружать настоязий рейтинг
+                            break;
                 }
             }
         });
@@ -60,6 +59,12 @@
                         <p><img src="/public/{{ news.photo }}" width="800" height="300" alt=""/></p>
                         {{ news.text }}
                     </div>
+                    <div class = "tags">
+                        Теги:
+                        {% for tager in Tags %}
+                            {{ tager }}
+                        {% endfor %}
+                    </div>
                     <div class="rating">
                         <input type="hidden" id="rating" value="{{ rating }} ">
                         <p> Рейтинг:{{ rating }} </p>
@@ -68,8 +73,6 @@
                         {% else %}
                             <a class="like-disLike" data-key="disLike">Не нравится</a>
                         {% endif %}
-
-
                     </div>
 
                     {% if (like==false) %}

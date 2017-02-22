@@ -2,6 +2,21 @@
 
 class Tags extends \Phalcon\Mvc\Model
 {
+    /**
+     * @return int
+     */
+    public function getNewsId()
+    {
+        return $this->news_id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTagId()
+    {
+        return $this->tag_id;
+    }
 
     /**
      *
@@ -34,6 +49,14 @@ class Tags extends \Phalcon\Mvc\Model
         $this->setSchema("developer");
         $this->belongsTo('news_id', '\News', 'id', ['alias' => 'News']);
         $this->belongsTo('tag_id', '\TagsName', 'id', ['alias' => 'TagsName']);
+    }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**
