@@ -1,36 +1,36 @@
 <h2 class="zag">
-    Форма добавления новости:
+    Форма редактирования новости:
 </h2>
 
-<form action="/admin/add" method="post" enctype = 'multipart/form-data'>
-
+<form action="/admin/edit/{{ news.getUrl() }}" method="post" enctype = 'multipart/form-data'>
     <label for="title">
         Заголовок:
     </label>
-    <p>{{ form.render("title") }}</p>
+    <p> {{ form.render("title") }}</p>
 
     <label for="key">
         Keywords:
     </label>
 
-    <p>{{ form.render("key") }}</p>
+    <p> {{ form.render("key") }}</p>
+
     <label for="$desc">
         Краткая информация:
     </label>
 
-    <p>{{ form.render("desc") }}</p>
+    <p> {{ form.render("desc") }}</p>
 
     <label for="photo">
         Фото:
     </label>
 
-    <p>{{ form.render("photo") }}</p>
+    <p>{{ form.render("photo") }}
 
     <label for="text">
         Текст:
     </label>
 
-    <p> {{ form.render("text") }}</p>
+    <p>{{ form.render("text") }}</p>
 
     <label for="date">
         Дата:
@@ -38,22 +38,15 @@
 
     <p>{{ form.render("date") }}</p>
 
-    <p>{{ form.render("url") }}</p>
+     {{ form.render("url") }}
 
     <label for="cat_id">
         Категория:
     </label>
 
-    <p> {{ form.render("cat_id") }} </p>
+    <p> {{ form.render("cat_id") }}</p>
 
-    <input type="hidden" name="user_id" value={{ session.get('user_id') }} >
-    <div class="tags">
-        Теги:
-        {% for tager in tags %}
-            {{ tager.getName() }}
-        {% endfor %}
-    </div>
-    <p>{{ submit_button("Добавить") }}</p>
+    <p>{{ submit_button("Сохранить") }}</p>
 
     <div id="errors">
         {% for message in form.getMessages() %}
@@ -62,17 +55,20 @@
     </div>
 
     <div id="errors">
+
         {% set messages = news.getMessages() %}
         {% if messages !== null %}
             {% for message in news.getMessages() %}
                 <p>{{ message.getMessage() }}</p>
             {% endfor %}
         {% endif %}
+
     </div>
 </form>
+
 <script type="text/javascript">
     $(document).ready(function () {
         $("#datepicker").datepicker({dateFormat: "yy-mm-dd"});
+
     });
 </script>
-

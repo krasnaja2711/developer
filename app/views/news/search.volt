@@ -30,8 +30,8 @@
                 </form>
             </div>
             <div id="logo">
-                <h1>Cats_world </h1>
-                <p>Мир котов</p>
+                <h1>Developer</h1>
+                <p>Всё для начинающих программистов</p>
             </div>
         </div>
     </div>

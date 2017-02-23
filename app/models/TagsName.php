@@ -1,6 +1,6 @@
 <?php
 
-class Category extends \Phalcon\Mvc\Model
+class TagsName extends \Phalcon\Mvc\Model
 {
 
     /**
@@ -15,26 +15,19 @@ class Category extends \Phalcon\Mvc\Model
     /**
      *
      * @var string
-     * @Column(type="string", length=20, nullable=false)
+     * @Column(type="string", length=15, nullable=false)
      */
     public $name;
 
     /**
-     *
-     * @var string
-     * @Column(type="string", length=50, nullable=false)
-     */
-    public $url;
-
-    /**
      * Initialize method for model.
      */
-
     public function initialize()
     {
-        $this->hasMany("id", "News", "id");
-
+        $this->setSchema("developer");
+        $this->hasMany('id', 'Tags', 'tag_id', ['alias' => 'Tags']);
     }
+
     /**
      * @return int
      */
@@ -60,43 +53,20 @@ class Category extends \Phalcon\Mvc\Model
     }
 
     /**
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getUrl()
-    {
-        return $this->url;
-    }
-
-    /**
-     * @param string $url
-     */
-    public function setUrl($url)
-    {
-        $this->url = $url;
-    }
-
-    /**
      * Returns table name mapped in the model.
      *
      * @return string
      */
     public function getSource()
     {
-        return 'category';
+        return 'tags_name';
     }
 
     /**
-     * @param null $parameters
+     * Allows to query a set of records that match the specified conditions
      *
-     * @return \Phalcon\Mvc\ResultsetInterface|Category[]
+     * @param mixed $parameters
+     * @return TagsName[]|TagsName
      */
     public static function find($parameters = null)
     {
@@ -104,9 +74,10 @@ class Category extends \Phalcon\Mvc\Model
     }
 
     /**
-     * @param null $parameters
+     * Allows to query the first record that match the specified conditions
      *
-     * @return \Phalcon\Mvc\Model|Category
+     * @param mixed $parameters
+     * @return TagsName
      */
     public static function findFirst($parameters = null)
     {

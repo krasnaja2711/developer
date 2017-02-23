@@ -114,6 +114,9 @@ class NewsForm extends \Phalcon\Forms\Form
             ]]);
         $this->add($cat_id);
 
+        $user_id = new Text("user_id");
+        $this->add($user_id);
+
     }
 
     public function beforeValidation($data, $entity)

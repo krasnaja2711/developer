@@ -1,13 +1,13 @@
 <?php
 use Phalcon\Paginator\Adapter\Model as PaginatorModel;
 
-class AdminController extends ControllerBase
+class BlogController extends ControllerBase
 {
 
     public function initialize()
     {
         $avrz = $this->session->get("authorization");
-        if ($avrz===1) {
+        if ($avrz===2) {
             $authorization = $this->session->get('authorization');
             $this->cookies->set('remember-me', $authorization, time()+600);
         }
@@ -18,9 +18,17 @@ class AdminController extends ControllerBase
 
     public function indexAction()
     {
+        $user_id =  $this->session->get("user_id");
         $currentPage = (int) $_GET["page"];
         $Categories = Category::find();
-        $News = News::find(["order" => "date DESC"]);
+        $News = News::find([
+            'conditions' => 'user_id = :user_id:',
+            'bind' => [
+                'user_id' => $user_id,
+            ],
+            'order' => 'date DESC'
+        ]);
+
         $paginator = new PaginatorModel(
             [
                 "data"  => $News,
@@ -28,6 +36,8 @@ class AdminController extends ControllerBase
                 "page"  => $currentPage,
             ]
         );
+
+
         $temp = [];
         foreach ($Categories as $category) {
             $temp[$category->getId()] = $category;
@@ -49,9 +59,6 @@ class AdminController extends ControllerBase
             'news' => $news,
         ]);
 
-        $tags = TagsName::find();
-        $this->view->setVar('tags', $tags);
-
         if (!$this->request->isPost()) {
             return $this->view;
         }
@@ -60,7 +67,6 @@ class AdminController extends ControllerBase
                 return $this->response->redirect('/admin');
             }
         }
-
     }
 
     public function editAction($slug)
@@ -98,20 +104,5 @@ class AdminController extends ControllerBase
         $this->response->redirect('/admin');
     }
 
-    public function usersAction()
-    {
-        $currentPage = (int)$_GET["page"];
-        $users = Users::find();
-        $paginator = new PaginatorModel(
-            [
-                "data" => $users,
-                "limit" => 10,
-                "page" => $currentPage,
-            ]
-        );
-        $page = $paginator->getPaginate();
-        $this->view->setVar('page', $page);
-
-    }
 
 }
