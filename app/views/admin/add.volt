@@ -1,8 +1,27 @@
+<script>
+    $(function () {
+        $(".tag_form").submit(function (e) {
+            e.preventDefault();
+            var tag_id = $(this).find(".tag_id").val(),
+            news_id = $(this).find(".news_id").val();
+            $.ajax({
+                type: "POST",
+                url: "/admin/addTag",
+                data: {"news_id": news_id,"tag_id": tag_id},
+                cache: false,
+                success: function () {
+
+                }
+            });
+        });
+    });
+</script>
+
 <h2 class="zag">
     Форма добавления новости:
 </h2>
 
-<form action="/admin/add" method="post" enctype = 'multipart/form-data'>
+<form action="/admin/add" method="post" enctype='multipart/form-data' class="news">
 
     <label for="title">
         Заголовок:
@@ -46,11 +65,15 @@
 
     <p> {{ form.render("cat_id") }} </p>
 
-    <input type="hidden" name="user_id" value={{ session.get('user_id') }} >
-    <div class="tags">
+    <input type="hidden" name="user_id" value={{ session.get('user_id') }}>
+    <div class="tags" style="display: none">
         Теги:
-        {% for tager in tags %}
-            {{ tager.getName() }}
+        {% for tagger in tags %}
+            <form method="post" action="/admin/addTag" class="tag_form" >
+                <input type="hidden" name="news_id" class="news_id" value="{{ maxId.getId() }}">
+                <input type="hidden" name="tag_id" class="tag_id" value="{{ tagger.getId() }}">
+                <input name="button" type="submit" value="{{ tagger.getName() }}">
+            </form>
         {% endfor %}
     </div>
     <p>{{ submit_button("Добавить") }}</p>

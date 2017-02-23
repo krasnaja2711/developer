@@ -26,6 +26,6 @@ class TagsController extends ControllerBase
             }
         $this->view->setVar('news', $news);
 
-
     }
+
 }

@@ -63,7 +63,6 @@
                        Теги:
                         {% for tegger in Tags %}
                             <a href="/tags/{{ tegger.name}}"> {{ tegger.name}}</a>
-
                         {% endfor %}
                     </div>
                     <div class="rating">
