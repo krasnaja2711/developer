@@ -7,13 +7,6 @@ class IndexController extends ControllerBase
     {
         $currentPage = (int)$_GET["page"];
         $News = News::find(["order" => "date DESC"]);
-        $News = $this->modelsManager->createBuilder()
-            ->from("News")
-            ->columns('*')
-            ->orderBy('date DESC')
-            ->where("tag_id = :tag_id:", ["tag_id" => $tag_id])
-            ->getQuery()
-            ->execute();
 
         $paginator = new PaginatorModel(
             [
@@ -30,13 +23,7 @@ class IndexController extends ControllerBase
             'form' => $form,
             'users' => $users,
         ]);
-        $rating =  $likes = Like::find([
-            'conditions' => 'news_id = :news_id:',
-            'bind' => [
-                'news_id' => $news_id,
-            ]
-        ]);
-        $rating = count($likes);
+
         if (!$this->request->isPost()) {
             return $this->view;
         }
