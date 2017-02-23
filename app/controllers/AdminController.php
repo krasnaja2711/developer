@@ -49,6 +49,9 @@ class AdminController extends ControllerBase
             'news' => $news,
         ]);
 
+        $tags = TagsName::find();
+        $this->view->setVar('tags', $tags);
+
         if (!$this->request->isPost()) {
             return $this->view;
         }

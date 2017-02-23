@@ -46,6 +46,7 @@ class AppRouter extends \Phalcon\Mvc\Router\Group
         });
 
         $this->CatRoutes();
+        $this->TagRoutes();
     }
 
     private function CatRoutes()
@@ -71,6 +72,27 @@ class AppRouter extends \Phalcon\Mvc\Router\Group
 
 
         }
-
     }
+
+    private function TagRoutes()
+    {
+
+        $TagsName = TagsName::query()
+            ->columns(['name', 'Tags.tag_id'])
+            ->join("Tags", "Tags.tag_id = TagsName.id")
+            ->execute();
+
+        foreach ($TagsName as $tagger) {
+            $url = $tagger['name'];
+
+            $this->add("/tags/{$url}",
+                [
+                    "controller" => "Tags",
+                    "action" => "Index",
+                    "tag_id" => $tagger['tag_id'],
+                ]
+            );
+        }
+    }
+
 }

@@ -77,17 +77,14 @@ class NewsController extends ControllerBase
         $this-> view-> setVar('rating', $rating);
         $this-> view-> setVar('like', $like);
 
-        $tags = Tags::find([
-            'conditions' => 'news_id = :news_id: ',
-            'bind' => [
-                'news_id' => $news_id,
-            ]]);
-        $Tags = [];
-        for ($i = 0; $i< count($tags); $i++){
-            array_push($Tags, $tags[$i]->tagsName->name);
-        }
-        $this->view->setVar('Tags', $Tags);
-
+            $Tags = $this->modelsManager->createBuilder()
+            ->from("Tags")
+            ->columns(array('name', 'Tags.id'))
+            ->join("TagsName", "Tags.tag_id = TagsName.id")
+            ->where("news_id = :news_id:", ["news_id" => $news_id])
+            ->getQuery()
+            ->execute();
+         $this->view->setVar('Tags', $Tags);
     }
 
 

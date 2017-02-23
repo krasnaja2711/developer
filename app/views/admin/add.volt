@@ -45,8 +45,14 @@
     </label>
 
     <p> {{ form.render("cat_id") }} </p>
-    <input type="text" name="user_id" value={{ session.get('user_id') }} >
 
+    <input type="hidden" name="user_id" value={{ session.get('user_id') }} >
+    <div class="tags">
+        Теги:
+        {% for tager in tags %}
+            {{ tager.getName() }}
+        {% endfor %}
+    </div>
     <p>{{ submit_button("Добавить") }}</p>
 
     <div id="errors">

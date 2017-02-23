@@ -60,9 +60,10 @@
                         {{ news.text }}
                     </div>
                     <div class = "tags">
-                        Теги:
-                        {% for tager in Tags %}
-                            {{ tager }}
+                       Теги:
+                        {% for tegger in Tags %}
+                            <a href="/tags/{{ tegger.name}}"> {{ tegger.name}}</a>
+
                         {% endfor %}
                     </div>
                     <div class="rating">
