@@ -2,28 +2,28 @@
 <link href="/public/css/modal.css" rel="stylesheet" type="text/css"/>
 {% set  categories = this.header.header()['ct'] %}
 {% set form = this.header.header()['form'] %}
+<body class="b-page">
 
-<div id="menu-wrapper">
-    <div id="menu">
-        <ul>
-            {% if session.get('authorization')!==null %}
+<header class="b-page__b-head">
+    <ul class="navbar__menu-items main-container">
+        <li class="current_page_item">
+            {% for cat in categories %}
+        <li><a href="/{{ cat.getUrl() }}">{{ cat.getName() }}</a></li>
+        {% endfor %}
+        {% if session.get('authorization')=== 1 %}
+            <li><a href="/admin">Админ</a></li>
+        {% elseif (session.get('authorization')=== 2) %}
+            <li><a href="/blog">{{ session.get('login')  }} </a></li>
+        {% endif %}
+
+        <li> {% if session.get('authorization')!==null %}
                 <a class="post" href="/login/logout" onclick="document.getElementById('myform').submit(); return false;"
                    id="login_pop"> Выйти </a> {% else %}
-                <a href="#login_form" id="login_pop"> Войти </a>'
-            {% endif %}
-            <li class="current_page_item">
-                <a href="/index">Home</a>
-                {% for cat in categories %}
-            <li><a href="/{{ cat.getUrl() }}">{{ cat.getName() }}</a></li>
-            {% endfor %}
-            {% if session.get('authorization')=== 1 %}
-                <li><a href="/admin">Админ</a></li>
-                {% elseif (session.get('authorization')=== 2) %}
-                    <li><a href="/blog">Блог</a></li>
-                {% endif %}
-        </ul>
-    </div>
-</div>
+                <a href="#login_form" id="login_pop"> Войти </a>
+            {% endif %}</li>
+    </ul>
+</header>
+
 <form method="post" action="/login/logout" id="myform">
     <input type="hidden" name="current_url" value="{{ router.getRewriteUri() }}">
 </form>

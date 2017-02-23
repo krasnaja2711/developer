@@ -12,7 +12,7 @@ class ControllerBase extends Controller
         }
     }
 
-    public function JsonResponse(array $data)
+    public function JsonResponse($data)
     {
         $this->view->disable();
         return $this->response->setJsonContent($data);
