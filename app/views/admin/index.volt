@@ -1,13 +1,15 @@
-<div id="menu-wrapper">
-    <div id="menu">
-        <ul>
-            <li class="current_page_item">
-                <a href="/index">Home</a>
-            <li><a href="/admin/add/">Добавить новость</a></li>
-            <li><a href="/admin/users/">Список пользователей</a></li>
-        </ul>
+{{ partial('parts/head') }}
+
+<nav>
+    <div class="nav-wrapper">
+        <div class="col s12">
+            <a style="margin-left: 15px;" href="/index" class="breadcrumb">Home</a>
+            <a href="/admin/add/" class="breadcrumb">Добавить новость</a>
+            <a href="/admin/users/" class="breadcrumb">Список пользователей</a>
+        </div>
     </div>
-</div>
+</nav>
+
 <div id="wrapper">
     <div id="header-wrapper">
         <div id="header">
@@ -58,11 +60,6 @@
         </div>
     </div>
 </div>
-<div id="footer">
-    <p>Copyright (c) 2013 Sitename.com. All rights reserved. Design by <a href="http://www.freecsstemplates.org">FCT</a>.
-        Photos by Fotogrph</a>.</p>
-</div>
-
 
 
 

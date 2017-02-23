@@ -1,14 +1,5 @@
-
 {{ partial('parts/head') }}
 <div id="wrapper">
-    <div id="header-wrapper">
-        <div id="header">
-            <div id="logo">
-                <h1>Developer</h1>
-                <p>Всё для начинающих программистов</p>
-            </div>
-        </div>
-    </div>
     <div id="page">
         <div id="page-bgtop">
             <div id="page-bgbtm">
@@ -31,9 +22,3 @@
         </div>
     </div>
 </div>
-<div id="footer">
-    <p>Copyright (c) 2013 Sitename.com. All rights reserved. Design by <a href="http://www.freecsstemplates.org">FCT</a>.
-        Photos by Fotogrph</a>.</p>
-</div>
-
-

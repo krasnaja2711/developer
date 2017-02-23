@@ -107,7 +107,7 @@ class NewsController extends ControllerBase
         $currentPage = (int) $_GET["page"];
         $Categories = Category::find();
         $news = News::find([
-            'conditions' => 'title ilike :title: or text ilike :title: ',
+            'conditions' => 'title like :title: or text like :title: ',
             'bind' => [
                 'title' => '%' . $_POST['search'] .'%',
             ]]);

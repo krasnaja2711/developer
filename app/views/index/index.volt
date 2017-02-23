@@ -1,67 +1,62 @@
-{% block content %}{% endblock %}
 {{ partial('parts/head') }}
-<div class="main-container">
-    <div class="b-page__b-news__search">
-        <form action="/news/search" method="post">
-        <input class="search__input" type="text" name="search" placeholder="Поиск...">
-        <button class="search__button"></button>
-        </form>
-    </div>
-</div>
-
-<div id="wrapper">
     {% for item in page.items %}
-    {% set cat = categories[item.getCatId()] %}
-    <div class="b-page__b-news main-container">
-        <section class="b-news__news-item">
-
-            <div class="news-item__b-date">
-                 <span class="news-item__b-date__date">{{ item.getDate() }}</span>
+        {% set cat = categories[item.getCatId()] %}
+        <div class="card">
+            <div class="card-image waves-effect waves-block waves-light">
+                <img class="activator" src="/public/{{ item.getPhoto() }}">
+                <span class="card-title">{{ item.getTitle() }}</span>
             </div>
-            <div class="b-news__news-item__b-top">
-                <div class="news-item__b-author">
-                    <a  class="news-item__b-author__a-author">
-                        <span class="news-item__b-author__autor">Автор</span>
-                    </a>
-                </div>
-                <div class="news-item__b-category">
-                    <a  class="news-item__b-category__a-category">
-                        <span class="news-item__b-category__category">{{ cat.getName() }}</span>
-                    </a>
-                </div>
+            <div class="card-content">
+                <span class="card-title activator grey-text text-darken-4">
+                    <i class="material-icons right">more_vert</i>
+                </span>
+                <p style="margin-bottom: 2px; color: #5099ff;">Автор - Unknown</p>
+                <p style="margin-bottom: 2px; color: #5099ff;">Категория: {{ cat.getName() }}</p>
+                <p style="color: #5099ff;">Дата: {{ item.getDate() }}</p>
             </div>
-            <a href="/{{ cat.getUrl() }}/{{ item.getUrl() }}" class="news-item__a-news-item">
-                <div class="news-item__b-img">
-                    <img src="/public/{{ item.getPhoto() }}" class="news-item__b-img__img">
-                </div>
-                <div class="news-item__b-title">
-                    <span class="news-item__b-title__title">{{ item.getTitle() }}</span>
-                </div>
-                <div class="news-item__b-text">
-                    <p class="news-item__b-text__text">{{ item.getDesc() }}</p>
-                </div>
-
-                <div class="news-item__b-bottom">
-                    <span class="news-item__b-bottom__like">10</span>
-                    <span class="news-item__b-bottom__comment">10</span>
-                </div>
-            </a>
-        </section>
-    </div>
-         {% endfor %}
+            <div class="card-action">
+                <a class="left" style="cursor: hand;"><i class="material-icons">thumb_up</i> 10</a>
+                <a style="cursor: hand;"><i class="material-icons">comment</i> 2</a>
+                <a class="right" href="/{{ cat.getUrl() }}/{{ item.getUrl() }}">Подробнее</a>
+            </div>
+            <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4">Описание<i
+                            class="material-icons right">close</i></span>
+                <p style="margin-top: 15px; font-size: medium;
+                font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">{{ item.getDesc() }}</p>
+            </div>
+        </div>
+    {% endfor %}
 
     {% if page.total_pages > 1 %}
-        <ul class="b-page__b-news__numbers">
-            {% for i in 1..page.total_pages %}
-                <li class="numbers__li">
-                    <a href="/index?page={{ i }}" class="numbers__li__a">{{ i }}</a>
-                </li>
-            {% endfor %}
-        </ul>
+        <div class="row">
+            <div class="center" style="margin: 20px 0 20px 0;">
+                <ul class="pagination">
+                    <li class="disabled">
+                        <i class="material-icons">chevron_left</i>
+                    </li>
+                    {% for i in 1..page.total_pages %}
+                        {% if i in request.getQuery() %}
+                            <li class="active">
+                                <a href="/index?page={{ i }}">{{ i }}</a>
+                            </li>
+                        {% elseif i not in request.getQuery() %}
+                            {% if i == 1 %}
+                                <li class="active">
+                                    <a href="/index?page=1">{{ i }}</a>
+                                </li>
+                            {% else %}
+                                <li><a href="/index?page=1">{{ i }}</a></li>
+                            {% endif %}
+                        {% else %}
+                            <li class="waves-effect"><a href="/index?page={{ i }}">{{ i }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    <li class="disabled">
+                        <i class="material-icons">chevron_right</i>
+                    </li>
+                </ul>
+            </div>
+        </div>
     {% endif %}
 </div>
-<footer class="b-page__b-footer">
-    <div class="main-container">
-        <div class="b-page__b-footer__b-text">© 2017, «Блог программиста»</div>
-    </div>
-</footer>

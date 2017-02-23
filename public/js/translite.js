@@ -1,3 +1,4 @@
+'use strict';
 function translit(){
 	// Символ, на который будут заменяться все спецсимволы
 	var space = '-'; 
@@ -22,7 +23,7 @@ function translit(){
 	
 	var curent_sim = '';
 	
-    for(i=0; i < text.length; i++) {
+    for(var i=0; i < text.length; i++) {
         // Если символ найден в массиве то меняем его
 		if(transl[text[i]] != undefined) {			
 			if(curent_sim != transl[text[i]] || curent_sim != space){
