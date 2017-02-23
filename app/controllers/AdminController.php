@@ -51,13 +51,17 @@ class AdminController extends ControllerBase
 
         $tags = TagsName::find();
         $this->view->setVar('tags', $tags);
+        $maxId = News::findFirst([
+            'order' => 'id DESC',
+            'limit' => 1
+        ]);
+        $this->view->setVar('maxId', $maxId);
 
         if (!$this->request->isPost()) {
             return $this->view;
         }
         if ($form->isValid($_POST, $news)) {
             if ($news->create()) {
-                return $this->response->redirect('/admin');
             }
         }
 
@@ -111,6 +115,19 @@ class AdminController extends ControllerBase
         );
         $page = $paginator->getPaginate();
         $this->view->setVar('page', $page);
+
+    }
+    public function addTagAction()
+    {
+        $tags = new Tags();
+        $form = new TagsForm();
+        $this->view->setVars([
+            'form' => $form,
+            'tags' => $tags,
+        ]);
+
+        $form->bind($_POST, $tags);
+        $tags->create();
 
     }
 

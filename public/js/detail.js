@@ -7,18 +7,6 @@
                 block = $('.block').val(),
                 news_id = $(".news_id").val(),
                 parent_id = $(this).find(".parent_id").val();
-            var form = $("<form/>",
-                { action:'/news/detail' ,
-                method:'post'}
-            );
-            form.append(
-                $("<input>",
-                    { type:'text',
-                        placeholder:'Keywords',
-                        name:'keyword',
-                        style:'width:65%' }
-                )
-            );
             $.ajax({
                 type: "POST",
                 url: "/news/detail",

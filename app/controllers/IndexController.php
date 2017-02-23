@@ -7,6 +7,7 @@ class IndexController extends ControllerBase
     {
         $currentPage = (int)$_GET["page"];
         $News = News::find(["order" => "date DESC"]);
+
         $paginator = new PaginatorModel(
             [
                 "data" => $News,
@@ -22,6 +23,7 @@ class IndexController extends ControllerBase
             'form' => $form,
             'users' => $users,
         ]);
+
         if (!$this->request->isPost()) {
             return $this->view;
         }

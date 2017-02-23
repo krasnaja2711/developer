@@ -156,7 +156,7 @@ class NewsController extends ControllerBase
         $user_id = $this->request->getPost("user_id");
         $news_id = $this->request->getPost("news_id");
         $like = Like::findFirst([
-            'conditions' => 'user_id = :user_id: and news_id = :news_id:',//доп условия
+            'conditions' => 'user_id = :user_id: and news_id = :news_id:',
             'bind' => [
                 'user_id' => $user_id,
                 'news_id' => $news_id,
