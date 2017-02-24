@@ -90,7 +90,7 @@ class NewsForm extends \Phalcon\Forms\Form
 
         $this->add($text);
 
-        $date = new Text("date", [
+        $date = new \Phalcon\Forms\Element\Date("date", [
             "id" => "datepicker"
         ]);
 
