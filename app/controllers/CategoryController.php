@@ -7,13 +7,16 @@ class CategoryController extends ControllerBase
     {
         $category = $this->dispatcher->getParam('categoryId');
 
-        $news = News::find([
-            'conditions' => 'cat_id = :cat_id:',
-            'bind' => [
-                'cat_id' => $category,
-            ],
-            'order' => 'date DESC'
-        ]);
+
+
+        $news = $this->modelsManager->createBuilder()
+            ->from("News")
+            ->columns(['cat_id', 'photo', 'title', 'description', 'url', 'News.date', 'login'])
+            ->join("Users", "News.user_id = Users.id")
+            ->where("cat_id = :cat_id:", ["cat_id" => $category])
+            ->orderBy('News.date DESC')
+            ->getQuery()
+            ->execute();
 
         $this->view->setVar('news', $news);
 
