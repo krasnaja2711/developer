@@ -78,7 +78,8 @@ class NewsForm extends \Phalcon\Forms\Form
         $this->add($photo);
 
         $text = new TextArea("text", [
-            "cols" => 100, "rows" => 10
+            "cols" => 100, "rows" => 10,
+            "id" => "redactor"
         ]);
 
         $text->addValidator(

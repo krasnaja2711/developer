@@ -14,6 +14,11 @@
                 }
             });
         });
+        $('#redactor').redactor({
+            plugins: ['table', 'video', 'source'],
+            imagePosition: true,
+            imageResizable: true
+        });
     });
 </script>
 
