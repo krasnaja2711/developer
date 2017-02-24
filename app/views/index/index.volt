@@ -46,7 +46,7 @@
                                     <a href="/index?page=1">{{ i }}</a>
                                 </li>
                             {% else %}
-                                <li><a href="/index?page=1">{{ i }}</a></li>
+                                <li><a href="/index?page={{ i }}">{{ i }}</a></li>
                             {% endif %}
                         {% else %}
                             <li class="waves-effect"><a href="/index?page={{ i }}">{{ i }}</a></li>
