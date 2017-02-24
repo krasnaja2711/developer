@@ -34,12 +34,12 @@
                 success: function (response) {
                     switch (key) {
                         case 'like':
-                            $('.rating p').html("Рейтинг:" + (+response));
+                            $('.rating').html("Рейтинг:" + (+response));
                             $this.data('key', 'disLike').html('<i class="material-icons">thumb_down</i>');
                             break;
 
                         case 'disLike':
-                            $('.rating p').html("Рейтинг:" + (+response ));
+                            $(' .rating').html("Рейтинг:" + (+response ));
                             $this.data('key', 'like').html('<i class="material-icons">thumb_up</i>');
                             break;
                     }
