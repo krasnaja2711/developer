@@ -104,41 +104,41 @@
             {% for com in Comments %}
                 <div class="commentBlock" id="comment-{{ com.getId() }}">
                     <div class="comment"><strong>{{ com.comment }}</strong><br>{{ com.date }}
-
-                    </div>
-                    <div id="delete">
-                        {% if session.get('authorization')===1 %}
-                            <a href="/news/del/{{ com.getId() }}"
-                               onclick="document.getElementById('myform2-{{ com.getId() }}').submit(); return false;">Удалить</a>
-                            <form method="post" action="/news/del/{{ com.getId() }}"
-                                  id="myform2-{{ com.getId() }}">
-                                <input type="hidden" name="current_url"
-                                       value="{{ router.getRewriteUri() }}">
-                            </form>
-                        {% endif %}
-                    </div>
-                    {% if session.get('authorization')!==null %}
-                        <div class="toggle">
-                            <div class="content">
-                                <form action="/news/detail" method="post" class="comment_form">
-                                    <input type="hidden" name="parent_id" class="parent_id"
-                                           value="{{ com.getId() }}">
-                                    {{ form1.render("comment") }}
-                                    <input type="hidden" name="date" class="date"
-                                           value="{{ date('Y-m-d') }} ">
-                                    <input type="hidden" name="news_id" class="news_id"
-                                           value="{{ news.id }}">
+                        <div id="delete">
+                            {% if session.get('authorization')===1 %}
+                                <a href="/news/del/{{ com.getId() }}"
+                                   onclick="document.getElementById('myform2-{{ com.getId() }}').submit(); return false;">Удалить</a>
+                                <form method="post" action="/news/del/{{ com.getId() }}"
+                                      id="myform2-{{ com.getId() }}">
                                     <input type="hidden" name="current_url"
                                            value="{{ router.getRewriteUri() }}">
-                                    <button class="right btn waves-effect waves-light" type="submit" name="button2">
-                                        Отправить
-                                        <i class="material-icons right">send</i>
-                                    </button>
                                 </form>
-                            </div>
-                            <a class="toggler" href="#">Ответить</a>
+                            {% endif %}
                         </div>
-                    {% endif %}
+                        {% if session.get('authorization')!==null %}
+                            <div class="toggle">
+                                <div class="content">
+                                    <form action="/news/detail" method="post" class="comment_form">
+                                        <input type="hidden" name="parent_id" class="parent_id"
+                                               value="{{ com.getId() }}">
+                                        {{ form1.render("comment") }}
+                                        <input type="hidden" name="date" class="date"
+                                               value="{{ date('Y-m-d') }} ">
+                                        <input type="hidden" name="news_id" class="news_id"
+                                               value="{{ news.id }}">
+                                        <input type="hidden" name="current_url"
+                                               value="{{ router.getRewriteUri() }}">
+                                        <button class="right btn waves-effect waves-light" type="submit" name="button2">
+                                            Отправить
+                                            <i class="material-icons right">send</i>
+                                        </button>
+                                    </form>
+                                </div>
+                                <a class="toggler" href="#">Ответить</a>
+                            </div>
+                        {% endif %}
+                    </div>
+
                     <div class="answers">
                         {% for comm in comments %}
                             {% if comm.getParentId() == com.getId() %}
