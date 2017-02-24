@@ -10,6 +10,18 @@
         border-radius: 5px;
         box-shadow: 2px 2px 2px #999;
     }
+    .b-news__news-item {
+        border-radius: 8px;
+    }
+    .comment {
+        border: 1px solid #666;
+        margin: 0 0 5px 0 !important;
+        padding: 10px;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 12px;
+        border-radius: 4px;
+        box-shadow: 2px 2px 2px #999;
+    }
 </style>
 <script>
     $('.chips').material_chip();
@@ -140,9 +152,9 @@
                             {% if comm.getParentId() == com.getId() %}
                                 <div class="answer">
                                     <p class="left">
-                                        <strong>{{ comm.comment }}</strong>
+                                        <strong>{{ comm.comment }}</strong><br>
+                                        > {{ comm.date }}
                                     </p>
-                                    <div class="right">{{ comm.date }}</div>
                                     <div id="delete">
                                         {% if session.get('authorization')===1 %}
                                             <a href="/news/del/{{ comm.getId() }}"
