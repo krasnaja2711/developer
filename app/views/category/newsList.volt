@@ -14,7 +14,7 @@
                     <span class="card-title activator grey-text text-darken-4">
                         <i class="material-icons right">more_vert</i>
                     </span>
-                    <p style="margin-bottom: 2px; color: #5099ff;">Автор - Unknown</p>
+                    <p style="margin-bottom: 2px; color: #5099ff;">Автор - {{ n.login }}</p>
                     <p style="color: #5099ff;">Дата: {{n.date }}</p>
                 </div>
                 <div class="card-action">
