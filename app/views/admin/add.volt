@@ -37,6 +37,8 @@
     }
     .zag {
         color: #737373;
+        font-size: 44px;
+        font-family: "Trebuchet MS", "Helvetica Neue", Helvetica, Tahoma, sans-serif;
     }
     .form_create {
         margin-bottom: 30px;

@@ -73,9 +73,7 @@
         <label for="cat_id">
             Категория:
         </label>
-
-        <p> {{ form.render("cat_id") }}</p>
-
+        <p>{{ form.render("cat_id") }}</p>
         <p>{{ submit_button("Сохранить") }}</p>
 
         <div id="errors">
@@ -85,14 +83,12 @@
         </div>
 
         <div id="errors">
-
             {% set messages = news.getMessages() %}
             {% if messages !== null %}
                 {% for message in news.getMessages() %}
                     <p>{{ message.getMessage() }}</p>
                 {% endfor %}
             {% endif %}
-
         </div>
     </form>
 </div>
