@@ -1,24 +1,32 @@
 {{ partial('parts/head') }}
-<div id="wrapper">
-    <div id="page">
-        <div id="page-bgtop">
-            <div id="page-bgbtm">
-                <div id="content">
-                    {% for n in news %}
-                        {% set cat = categories[n.getCatId()] %}
-                    <div class="post">
-                        <h2 class="title"> <a href="/{{ cat.getUrl() }}/{{ n.getUrl() }}">{{ n.getTitle() }}</a></h2>
-                        <p class="meta"> on {{ n.getDate() }}</p>
-                        <div class="entry">
-                            <p><img src="/public/{{ n.getPhoto() }}" width="800" height="300" alt=""/></p>
-                            <p><p>{{ n.getDescription() }}</p></p>
-                        </div>
-                    </div>
-                        {% endfor %}
-                    <div style="clear: both;">&nbsp;</div>
-                </div>
-                <div style="clear: both;">&nbsp;</div>
+
+<div>
+    {% for n in news %}
+        {% set cat = categories[n.getCatId()] %}
+
+        <div class="card">
+            <div class="card-image waves-effect waves-block waves-light">
+                <img class="activator" src="/public/{{ n.getPhoto() }}">
+                <span class="card-title">{{ n.getTitle() }}</span>
+            </div>
+            <div class="card-content">
+<span class="card-title activator grey-text text-darken-4">
+<i class="material-icons right">more_vert</i>
+</span>
+                <p style="margin-bottom: 2px; color: #5099ff;">Автор - Unknown</p>
+                <p style="color: #5099ff;">Дата: {{ n.getDate() }}</p>
+            </div>
+            <div class="card-action">
+                <a style="height: 30px" class="right" href="/{{ cat.getUrl() }}/{{ n.getUrl() }}">
+                    <p>Подробнее</p>
+                </a>
+            </div>
+            <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4">
+                    Описание<i class="material-icons right">close</i></span>
+                <p style="margin-top: 15px; font-size: medium;
+font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">{{ n.getDescription() }}</p>
             </div>
         </div>
-    </div>
+    {% endfor %}
 </div>
