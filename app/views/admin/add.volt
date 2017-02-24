@@ -1,17 +1,18 @@
+
 {% set categories = this.header.header()['ct'] %}
+
 <script>
     $(function () {
         $(".tag_form").submit(function (e) {
             e.preventDefault();
             var tag_id = $(this).find(".tag_id").val(),
-                news_id = $(this).find(".news_id").val();
+                    news_id = $(this).find(".news_id").val();
             $.ajax({
                 type: "POST",
                 url: "/admin/addTag",
                 data: {"news_id": news_id, "tag_id": tag_id},
                 cache: false,
                 success: function () {
-
                 }
             });
         });
@@ -35,11 +36,13 @@
     body {
         background-color: #e0e0e0;
     }
+
     .zag {
         color: #737373;
         font-size: 44px;
         font-family: "Trebuchet MS", "Helvetica Neue", Helvetica, Tahoma, sans-serif;
     }
+
     .form_create {
         margin-bottom: 30px;
     }
@@ -67,6 +70,7 @@
 
         <p>{{ form.render("photo") }}</p>
 
+
         <label for="text">
             Текст:
         </label>
@@ -77,33 +81,33 @@
         <p>{{ form.render("date") }}</p>
         <p>{{ form.render("url") }}</p>
         <label for="cat_id">
-            Категория:
-         <p>{{ form.render("url") }}</p>
+            Категория:</label>
 
-        <input type="hidden" name="user_id" value={{ session.get('user_id') }}>
-        <div class="tags" style="display: none">
-            Теги:
-            {% for tagger in tags %}
-                <form method="post" action="/admin/addTag" class="tag_form">
-                    <input type="hidden" name="news_id" class="news_id" value="{{ maxId.getId() }}">
-                    <input type="hidden" name="tag_id" class="tag_id" value="{{ tagger.getId() }}">
-                    <input name="button" type="submit" value="{{ tagger.getName() }}">
-                </form>
-            {% endfor %}
-        </div>
-        <p>{{ submit_button("Добавить") }}</p>
-        <div id="errors">
-            {% for message in form.getMessages() %}
-                <p>{{ message.getMessage() }}</p>
-            {% endfor %}
-        </div>
-        <div id="errors">
-            {% set messages = news.getMessages() %}
-            {% if messages !== null %}
-                {% for message in news.getMessages() %}
+            <p>{{ form.render("cat_id") }}</p>
+            <input type="hidden" name="user_id" value={{ session.get('user_id') }}/>
+            <div class="tags" style="display: none">
+                Теги:
+                {% for tagger in tags %}
+                    <form method="post" action="/admin/addTag" class="tag_form">
+                        <input type="hidden" name="news_id" class="news_id" value="{{ maxId.getId() }}">
+                        <input type="hidden" name="tag_id" class="tag_id" value="{{ tagger.getId() }}">
+                        <input name="button" type="submit" value="{{ tagger.getName() }}">
+                    </form>
+                {% endfor %}
+            </div>
+            <p>{{ submit_button("Добавить") }}</p>
+            <div id="errors">
+                {% for message in form.getMessages() %}
                     <p>{{ message.getMessage() }}</p>
                 {% endfor %}
-            {% endif %}
-        </div>
+            </div>
+            <div id="errors">
+                {% set messages = news.getMessages() %}
+                {% if messages !== null %}
+                    {% for message in news.getMessages() %}
+                        <p>{{ message.getMessage() }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
     </form>
 </div>

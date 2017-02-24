@@ -1,3 +1,7 @@
+
+
+{% set categories = this.header.header()['ct'] %}
+
 <style>
     body {
         background-color: #e0e0e0;

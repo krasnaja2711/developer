@@ -111,8 +111,10 @@ class NewsForm extends \Phalcon\Forms\Form
         $cat_id = new Select("cat_id", Category::find(), [
             "using" => [
                 "id",
-                "name",
+                "name"
             ]]);
+
+
         $this->add($cat_id);
 
         $user_id = new Text("user_id");
