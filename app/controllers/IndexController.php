@@ -6,7 +6,14 @@ class IndexController extends ControllerBase
     public function indexAction()
     {
         $currentPage = (int)$_GET["page"];
-        $News = News::find(["order" => "date DESC"]);
+
+         $News = $this->modelsManager->createBuilder()
+                  ->from("News")
+                  ->columns(['title', 'News.date', 'description','photo', 'Users.login', 'cat_id', 'url'])
+                  ->join("Users", "News.user_id = Users.id")
+                    ->orderBy('News.date DESC')
+                  ->getQuery()
+                  ->execute();
 
         $paginator = new PaginatorModel(
             [
@@ -15,6 +22,8 @@ class IndexController extends ControllerBase
                 "page" => $currentPage,
             ]
         );
+
+
         $page = $paginator->getPaginate();
         $this->view->setVar('page', $page);
         $form = new LoginForm();

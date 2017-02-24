@@ -77,21 +77,6 @@ class News extends \Phalcon\Mvc\Model
         $this->key = $key;
     }
 
-    /**
-     * @return string
-     */
-    public function getDesc()
-    {
-        return $this->desc;
-    }
-
-    /**
-     * @param string $desc
-     */
-    public function setDesc($desc)
-    {
-        $this->desc = $desc;
-    }
 
     /**
      * @return string
@@ -197,6 +182,14 @@ class News extends \Phalcon\Mvc\Model
     public $title;
 
     /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
      *
      * @var string
      * @Column(type="string", length=50, nullable=false)
@@ -208,7 +201,7 @@ class News extends \Phalcon\Mvc\Model
      * @var string
      * @Column(type="string", length=500, nullable=false)
      */
-    public $desc;
+    public $description;
 
     /**
      *

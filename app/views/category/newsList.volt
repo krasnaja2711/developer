@@ -11,7 +11,7 @@
                         <p class="meta"> on {{ n.getDate() }}</p>
                         <div class="entry">
                             <p><img src="/public/{{ n.getPhoto() }}" width="800" height="300" alt=""/></p>
-                            <p><p>{{ n.getDesc() }}</p></p>
+                            <p><p>{{ n.getDescription() }}</p></p>
                         </div>
                     </div>
                         {% endfor %}

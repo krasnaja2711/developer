@@ -34,7 +34,7 @@
                                 <p>Ключевые слова:</p>
                                 {{ item.key }}
                                 <p> Краткая информация:</p>
-                                {{ item.desc }}
+                                {{ item.description }}
                                 <p> Фото:</p>
                                 {{ item.photo }}
                                 <p> Текст:</p>

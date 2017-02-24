@@ -48,7 +48,7 @@
                         <p class="meta"> on {{ item.getDate() }}</p>
                         <div class="entry">
                             <p><img src="/public/{{ item.getPhoto() }}" width="800" height="300" alt=""/></p>
-                            <p>{{ item.getDesc() }}</p>
+                            <p>{{ item.getDescription() }}</p>
                         </div>
                     </div>
                     {% set count=count+1 %}
