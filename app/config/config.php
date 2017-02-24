@@ -11,7 +11,7 @@ return new \Phalcon\Config([
         'adapter'     => 'Mysql',
         'host'        => 'localhost',
         'username'    => 'root',
-        'password'    => '27112711',
+        'password'    => '405b9c',
         'dbname'      => 'developer',
         'charset'     => 'utf8',
     ],
@@ -31,5 +31,8 @@ return new \Phalcon\Config([
         // of the webpspace.  This will break if the public/index.php entry point is moved or
         // possibly if the web server rewrite rules are changed. This can also be set to a static path.
         'baseUri'        => '/',
+    ],
+    'settings' => [
+        'development'    => False
     ]
 ]);
