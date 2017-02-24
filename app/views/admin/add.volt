@@ -1,3 +1,4 @@
+{% set categories = this.header.header()['ct'] %}
 <script>
     $(function () {
         $(".tag_form").submit(function (e) {
@@ -75,8 +76,8 @@
         <p>{{ form.render("url") }}</p>
         <label for="cat_id">
             Категория:
-        </label>
-        <p> {{ form.render("cat_id") }} </p>
+         <p>{{ form.render("url") }}</p>
+
         <input type="hidden" name="user_id" value={{ session.get('user_id') }}>
         <div class="tags" style="display: none">
             Теги:

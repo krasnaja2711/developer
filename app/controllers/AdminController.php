@@ -119,6 +119,7 @@ class AdminController extends ControllerBase
     }
     public function addTagAction()
     {
+
         $tags = new Tags();
         $form = new TagsForm();
         $this->view->setVars([

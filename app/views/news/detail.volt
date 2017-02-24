@@ -52,12 +52,11 @@
 
 <div class="card">
     <div class="card-image waves-effect waves-block waves-light">
-        <img class="activator" src="/public/{{ news.getPhoto() }}">
-        <span class="card-title">{{ news.getTitle() }}</span>
+        <img class="activator" src="/public/{{ news.photo }}">
+        <span class="card-title">{{ news.title }}</span>
     </div>
     <div class="card-content">
-        <p style="margin-bottom: 2px; color: #5099ff;">Автор - Unknown</p>
-        <p style="margin-bottom: 2px; color: #5099ff;">Дата: {{ news.getDate() }}</p>
+        <p style="margin-bottom: 2px; color: #5099ff;">Дата: {{ news.date}}</p>
         <input type="hidden" id="rating" value="{{ rating }} ">
         <p class="rating" style="margin-bottom: 2px; color: #5099ff;">Рейтинг: {{ rating }}</p>
         {% if (like==false) %}
@@ -81,21 +80,18 @@
 <div class="b-page__b-news main-container">
     <section class="b-news__news-item">
 
-        <div class="news-item__b-date">
-            <span class="news-item__b-date__date">{{ news.getDate() }}</span>
-        </div>
 
         {% if (like==false) %}
             <form method="post" action="/news/like" id="likeForm">
                 <input type="hidden" name="user_id" id="user_id" value="{{ session.get('user_id') }}">
-                <input type="hidden" name="news_id" id="news_id" value="{{ news.getId() }}">
+                <input type="hidden" name="news_id" id="news_id" value="{{ news.id }}">
                 <input type="hidden" name="current_url"
                        value="{{ router.getRewriteUri() }}">
             </form>
         {% else %}
             <form method="post" action="/news/disLike/" id="dislikeForm">
                 <input type="hidden" name="user_id" id="user_id" value="{{ session.get('user_id') }}">
-                <input type="hidden" name="news_id" id="news_id" value="{{ news.getId() }}">
+                <input type="hidden" name="news_id" id="news_id" value="{{ news.id }}">
                 <input type="hidden" name="current_url"
                        value="{{ router.getRewriteUri() }}">
             </form>
